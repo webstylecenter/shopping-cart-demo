@@ -12,11 +12,6 @@ class CartService
     {
     }
 
-    public function getCart(): array
-    {
-        return $this->requestStack->getSession()->get('cart', []);
-    }
-
     public function getReadableCart(): array
     {
         $cart = ['items'=>[]];
@@ -64,16 +59,8 @@ class CartService
         return $this->getCart();
     }
 
-    public function getTotalBeforeDiscount(): float
+    private function getCart(): array
     {
-        $total = 0;
-
-        foreach ($this->getCart() as $productId => $quantiy) {
-            $product = $this->productRepository->findOneBy(['id' => $productId]);
-
-            $total += ($product->getPrice() * $quantiy);
-        }
-
-        return $total;
+        return $this->requestStack->getSession()->get('cart', []);
     }
 }
