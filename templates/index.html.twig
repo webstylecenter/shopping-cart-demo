@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Producten overzicht</h2>
+
+    <table width="100%">
+        {% for productCategory in productCategories %}
+            <tr>
+                <th class="categoryName" align="left">{{ productCategory.name }}</th>
+                <th align="right">{{ productCategory.discountPercentage ?? 0 }}%</th>
+            </tr>
+            <tr>
+                <th align="left">Product</th>
+                <th align="right">Prijs per eenheid in Euro's</th>
+            </tr>
+            {% for product in productCategory.products %}
+                <tr>
+                    <td align="left">
+                        <a class="button" href="{{ path('add', {'productId': product.id}) }}">+</a>
+                        <a class="button" href="{{ path('remove', {'productId': product.id}) }}">-</a>
+                        {{ product.name }}
+                    </td>
+                    <td align="right">{{ product.price }}</td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+    </table>
+{% endblock %}

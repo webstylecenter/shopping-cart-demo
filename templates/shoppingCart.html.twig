@@ -1,0 +1,27 @@
+<h2>Shopping Cart</h2>
+{% if cart %}
+<table width="100%">
+    <tr>
+        <th align="left">Product</th>
+        <th align="left">Prijs p.stuk</th>
+        <th align="left">Aantal</th>
+        <th align="left">Prijs totaal</th>
+    </tr>
+
+    {% for product in cart.items %}
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.quantity }}</td>
+            <td>{{ product.priceTotal }}</td>
+        </tr>
+    {% endfor %}
+
+    <tr>
+        <td colspan="3">Totaal</td>
+        <td>{{ cart.total }}</td>
+    </tr>
+</table>
+{% else %}
+    Geen producten in winkelwagen
+{% endif %}
