@@ -4,11 +4,12 @@ namespace App\Service;
 
 use App\Entity\Product;
 use App\Repository\ProductRepository;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class CartService
 {
-    public function __construct(private RequestStack $requestStack, private ProductRepository $productRepository)
+    const SESSION_FILE = 'session.json';
+
+    public function __construct(private ProductRepository $productRepository)
     {
     }
 
@@ -39,7 +40,7 @@ class CartService
         $cart = $this->getCart();
         $cart[$product->getId()] = isset($cart[$product->getId()]) ? $cart[$product->getId()] += 1 : 1;
 
-        $this->requestStack->getSession()->set('cart', $cart);
+        file_put_contents(self::SESSION_FILE, json_encode($cart, JSON_THROW_ON_ERROR));
 
         return $this->getCart();
     }
@@ -54,13 +55,24 @@ class CartService
             }
         }
 
-        $this->requestStack->getSession()->set('cart', $cart);
+        file_put_contents(self::SESSION_FILE, json_encode($cart, JSON_THROW_ON_ERROR));
 
         return $this->getCart();
     }
 
+    public function clearCart(): array
+    {
+        file_put_contents(self::SESSION_FILE, json_encode([], JSON_THROW_ON_ERROR));
+
+        return [];
+    }
+
     private function getCart(): array
     {
-        return $this->requestStack->getSession()->get('cart', []);
+        if (!file_exists(self::SESSION_FILE)) {
+            file_put_contents(self::SESSION_FILE, json_encode([], JSON_THROW_ON_ERROR));
+        }
+
+        return json_decode(file_get_contents(self::SESSION_FILE), true, 512, JSON_THROW_ON_ERROR);
     }
 }
