@@ -1,5 +1,5 @@
 name: PHPunit
-on: [push, pull_requests]
+on: [push]
 jobs:
   build-test:
     runs-on: ubuntu-latest

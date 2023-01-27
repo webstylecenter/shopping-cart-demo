@@ -2,7 +2,7 @@ name: Deployment
 concurrency:
   group: production
   cancel-in-progress: true
-on: [workflow_run]
+on: [workflow_dispatch]
 jobs:
   deployment:
    runs-on: ubuntu-latest
