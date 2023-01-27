@@ -5,25 +5,9 @@ namespace App\Tests;
 use App\Entity\Product;
 use App\Repository\ProductRepository;
 use App\Service\CartService;
-use Doctrine\ORM\EntityManagerInterface;
-use Psr\Container\ContainerInterface;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class ShoppingCartTest extends KernelTestCase
+class ShoppingCartTest extends TestContainer
 {
-    private EntityManagerInterface $entityManager;
-    private ContainerInterface $container;
-
-    protected function setUp(): void
-    {
-        $kernel = self::bootKernel();
-        $this->container = static::getContainer();
-
-        $this->entityManager = $kernel->getContainer()
-            ->get('doctrine')
-            ->getManager();
-    }
-
     public function testDatabaseContents(): void
     {
         $products = $this->entityManager
