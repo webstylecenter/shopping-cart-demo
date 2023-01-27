@@ -1,5 +1,5 @@
-name: CI
-on: [push]
+name: PHPunit
+on: [push, pull_requests]
 jobs:
   build-test:
     runs-on: ubuntu-latest
