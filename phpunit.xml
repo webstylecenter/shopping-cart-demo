@@ -19,6 +19,7 @@
         <server name="DATABASE_URL" value="sqlite:///:memory:" />
         <server name="MESSENGER_TRANSPORT_DSN" value="doctrine://default?auto_setup=0" />
         <server name="MAILER_DSN" value="" />
+        <server name="SYMFONY_DEPRECATIONS_HELPER" value="disabled" />
     </php>
 
     <testsuites>
@@ -34,7 +35,14 @@
     </coverage>
 
     <listeners>
-        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener">
+            <arguments>
+                <array>
+                    <!-- set this option to 0 to disable the DebugClassLoader integration -->
+                    <element key="debug-class-loader"><integer>0</integer></element>
+                </array>
+            </arguments>
+        </listener>
     </listeners>
 
     <!-- Run `composer require symfony/panther` before enabling this extension -->
